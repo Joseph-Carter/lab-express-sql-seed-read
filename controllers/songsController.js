@@ -33,19 +33,28 @@ songs.post("/", checkName, checkBoolean, async (req, res) => {
 });
 
 songs.delete("/:id", async (req, res) => {
-    const { id } = req.params
-    const deletedSong = await deleteSong(id)
-    if (deletedSong) {
-    res.status(200).json({success: true, payload: {data: deletedSong}})
-} else {
-    res.status(404).json("Song not found.")
-}
+    try {
+        const { id } = req.params
+        const deletedSong = await deleteSong(id)
+        if (deletedSong) {
+            res.status(200).json({success: true, payload: {data: deletedSong}})
+            
+        } else {
+            res.status(404).json("Song failed to be deleted.")
+        }
+    } catch (error) {
+        res.send(error)
+    }
 })
 
-songs.update("/:id", async (req, res) => {
+songs.put("/:id", async (req, res) => {
     const { id } = req.params
-    const updatedSong = req.body
-
+    const updatedSong = await updateSong(id, req.body);
+    if(updatedSong.id) {
+        res.status(200).json(updatedSong);
+    } else {
+        res.status(404).json("No song found with that id.")
+    }
 })
 
 module.exports = songs;
