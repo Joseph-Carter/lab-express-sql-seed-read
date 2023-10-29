@@ -1,5 +1,5 @@
 const express= require("express");
-const { getAllSongs, getOneSong, createSong, deleteSong } = require("../queries/songs.js")
+const { getAllSongs, getOneSong, createSong, deleteSong, updateSong } = require("../queries/songs.js")
 const { checkName, checkBoolean } = require("../validations/checkSongs.js")
 const songs = express.Router();
 
@@ -34,12 +34,18 @@ songs.post("/", checkName, checkBoolean, async (req, res) => {
 
 songs.delete("/:id", async (req, res) => {
     const { id } = req.params
-    const deletedSongs = await deleteSong(id)
-    if (deletedSongs) {
-    res.status(200).json({success: true, payload: {data: deletedSongs}})
+    const deletedSong = await deleteSong(id)
+    if (deletedSong) {
+    res.status(200).json({success: true, payload: {data: deletedSong}})
 } else {
     res.status(404).json("Song not found.")
 }
+})
+
+songs.update("/:id", async (req, res) => {
+    const { id } = req.params
+    const updatedSong = req.body
+
 })
 
 module.exports = songs;

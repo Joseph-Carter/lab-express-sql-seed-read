@@ -39,11 +39,14 @@ const deleteSong = async (id) => {
     }
 };
 
-const updateSong = () => {};
+const updateSong = async (id) => {
+    
+};
 
 module.exports = {
     getAllSongs,
     getOneSong,
     createSong,
-    deleteSong
+    deleteSong,
+    updateSong
 }
