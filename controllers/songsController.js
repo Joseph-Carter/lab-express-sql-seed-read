@@ -14,7 +14,7 @@ songs.get("/", async (req, res) => {
 
 songs.get("/:id", async (req, res) => {
     const { id } = req.params
-    const oneSong = await getOneSong();
+    const oneSong = await getOneSong(id);
     if(oneSong) {
         res.json(oneSong)
     } else {
@@ -47,7 +47,7 @@ songs.delete("/:id", async (req, res) => {
     }
 })
 
-songs.put(":id", async (req, res) => {
+songs.put("/:id", async (req, res) => {
     const { id } = req.params
     const updatedSong = await updateSong(id, req.body);
     if(updatedSong.id) {
