@@ -14,7 +14,7 @@ songs.get("/", async (req, res) => {
 
 songs.get("/:id", async (req, res) => {
     const { id } = req.params
-    const oneSong = await getOneSong();
+    const oneSong = await getOneSong(id);
     if(oneSong) {
         res.json(oneSong)
     } else {
